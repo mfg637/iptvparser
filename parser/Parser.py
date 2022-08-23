@@ -9,8 +9,9 @@ from dataclasses import dataclass
 @dataclass(frozen=True)
 class Channel:
     title: str
-    playlist: typing.Any
+    playlist: str
     category: str
+    icon_url: str | None = None
 
 
 class Parser(abc.ABC):

@@ -41,16 +41,19 @@ class PlaylistManager(wx.Frame):
             json.dump(prepared_data, f)
 
     def load_playlists(self):
-        with open("playlists.json", "r") as f:
-            playlists_data = json.load(f)
-            for pl_data in playlists_data:
-                _parser = parser.hls_parser.HLSParser()
-                _parser.title = pl_data["title"]
-                if pl_data["is_file"]:
-                    _parser.parse_file(pathlib.Path(pl_data["origin"]))
-                else:
-                    _parser.parse_url(pl_data["origin"])
-                self._playlists.append(_parser)
+        try:
+            with open("playlists.json", "r") as f:
+                playlists_data = json.load(f)
+                for pl_data in playlists_data:
+                    _parser = parser.hls_parser.HLSParser()
+                    _parser.title = pl_data["title"]
+                    if pl_data["is_file"]:
+                        _parser.parse_file(pathlib.Path(pl_data["origin"]))
+                    else:
+                        _parser.parse_url(pl_data["origin"])
+                    self._playlists.append(_parser)
+        except FileNotFoundError:
+            pass
 
     def _update_playlist_control(self):
         self.playlist_element.Clear()
