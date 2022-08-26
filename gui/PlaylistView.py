@@ -5,7 +5,7 @@ import subprocess
 
 class PlaylistViewer(wx.Frame):
     def __init__(self, _parser: parser.Parser, parent):
-        wx.Frame.__init__(self, parent, wx.ID_ANY, title='Playlist viewer', size=(256*3, 256))
+        wx.Frame.__init__(self, parent, wx.ID_ANY, title='{} playlist'.format(_parser.title), size=(256*3, 256))
         self._current_channels: list[parser.Channel] = []
         self._parser = _parser
         self.panel = wx.Panel(self, wx.ID_ANY)
