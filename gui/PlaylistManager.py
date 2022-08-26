@@ -44,9 +44,12 @@ class PlaylistManager(wx.Frame):
         try:
             with open("playlists.json", "r") as f:
                 playlists_data = json.load(f)
+                print(playlists_data)
                 for pl_data in playlists_data:
                     _parser = parser.hls_parser.HLSParser()
                     _parser.title = pl_data["title"]
+                    _parser.origin = pl_data["origin"]
+                    _parser.is_file = pl_data["is_file"]
                     if pl_data["is_file"]:
                         _parser.parse_file(pathlib.Path(pl_data["origin"]))
                     else:

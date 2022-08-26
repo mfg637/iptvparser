@@ -1,9 +1,11 @@
 import abc
 import io
 import pathlib
-import typing
+import logging
 import requests
 from dataclasses import dataclass
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -20,9 +22,9 @@ class Parser(abc.ABC):
         self._categories: set[str] = set()
         self._playlist_icon = None
 
-        self.title: str | None = None
-        self.origin: str | None = None
-        self.is_file: bool | None = None
+        self._title: str | None = None
+        self._origin: str | None = None
+        self._is_file: bool | None = None
 
     @abc.abstractmethod
     def _parse(self, fp: io.TextIOBase):
@@ -68,3 +70,30 @@ class Parser(abc.ABC):
             "origin": self.origin,
             "is_file": self.is_file
         }
+
+    @property
+    def title(self):
+        return self._title
+
+    @title.setter
+    def title(self, _title):
+        logger.debug("Property title set value {}".format(_title))
+        self._title = _title
+
+    @property
+    def origin(self):
+        return self._origin
+
+    @origin.setter
+    def origin(self, _origin):
+        logger.debug("Property origin set value {}".format(_origin))
+        self._origin = _origin
+
+    @property
+    def is_file(self):
+        return self._is_file
+
+    @is_file.setter
+    def is_file(self, _is_file):
+        logger.debug("Property is_file set value {}".format(_is_file))
+        self._is_file = _is_file
